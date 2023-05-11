@@ -6,46 +6,49 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.11-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>currencyBot</artifactId>
+	<groupId>com.dmitrychinyaev</groupId>
+	<artifactId>currency-bot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>currencyBot</name>
-	<description>Demo project for Spring Boot</description>
+	<name>currency-bot</name>
 	<properties>
 		<java.version>17</java.version>
+		<starter-test.version>2.7.11</starter-test.version>
+		<starter-web.version>2.7.11</starter-web.version>
+		<configuration-processor.version>2.7.11</configuration-processor.version>
+		<telegrambots-starter.version>6.5.0</telegrambots-starter.version>
+		<lombok.version>1.18.24</lombok.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${starter-web.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
+			<version>${configuration-processor.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>${lombok.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.10.2</version>
+			<version>${starter-test.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.telegram</groupId>
 			<artifactId>telegrambots-spring-boot-starter</artifactId>
-			<version>6.5.0</version>
+			<version>${telegrambots-starter.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
 

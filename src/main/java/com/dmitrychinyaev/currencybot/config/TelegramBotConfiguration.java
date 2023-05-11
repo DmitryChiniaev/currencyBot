@@ -1,4 +1,4 @@
-package com.github.dmitrychinyaev.currencyBot.config;
+package com.dmitrychinyaev.currencybot.config;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
