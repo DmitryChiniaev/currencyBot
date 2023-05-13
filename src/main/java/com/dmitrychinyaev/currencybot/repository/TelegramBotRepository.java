@@ -25,7 +25,7 @@ public class TelegramBotRepository {
     private Map<String,ForeignCurrency> foreignCurrencyBase;
     private String availableForeignCurrencyBase;
     private Date dateOfUpdate;
-    @Scheduled(cron = TelegramBotCommon.ATTRIBUTE_CRON_BASE_UPDATE)
+    @Scheduled(cron = "@hourly")
     public void updateCurrencyBase() throws IOException, ParserConfigurationException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
