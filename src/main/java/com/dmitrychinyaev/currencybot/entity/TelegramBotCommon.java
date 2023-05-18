@@ -38,7 +38,6 @@ public class TelegramBotCommon {
     public static final String ATTRIBUTE_FOREIGN_CURRENCY_NOMINAL = "Nominal";
     public static final String ATTRIBUTE_FOREIGN_CURRENCY_NAME = "Name";
     public static final String ATTRIBUTE_FOREIGN_CURRENCY_VALUE = "Value";
-    public static final String ATTRIBUTE_CRON_BASE_UPDATE = "@hourly";
 
     //test parameters SMC = SERVICE MAKE CALCULATION
     public static final String TEST_SMC_USD = "100 USD";
