@@ -40,7 +40,8 @@ public class TelegramBotService {
             String[] splitUserMessage = userMessage.split(" ");
             //check if number < 1
             String numberToConvertFromMessage = splitUserMessage[0];
-            if(checkNumberGreaterThanZero(numberToConvertFromMessage)<1){
+            if(checkNumberGreaterThanZero(numberToConvertFromMessage)<1 |
+                    checkNumberGreaterThanZero(numberToConvertFromMessage)>100000000 ){
                 log.error("В запросе отрицательное число или ноль");
                 return TelegramBotCommon.TEXT_NOT_POSITIVE;
             }
