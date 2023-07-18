@@ -15,9 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +61,7 @@ public class TelegramBotRepository {
     }
 
     public ForeignCurrency findForeignCurrencyByCharCode (String charCodeToFind) throws IOException, ParserConfigurationException, SAXException {
-        checkIfBaseIsNull();
+        checkIfBaseIsNullOrInvalid();
         return foreignCurrencyBase.get(charCodeToFind);
     }
 
@@ -72,11 +70,11 @@ public class TelegramBotRepository {
     }
 
     public String getListOfAvailableCurrency() throws IOException, ParserConfigurationException, SAXException {
-        checkIfBaseIsNull();
+        checkIfBaseIsNullOrInvalid();
         return availableForeignCurrencyBase;
     }
 
-    public void checkIfBaseIsNull() throws IOException, ParserConfigurationException, SAXException {
+    public void checkIfBaseIsNullOrInvalid() throws IOException, ParserConfigurationException, SAXException {
         if(foreignCurrencyBase == null || dateOfUpdate.isBefore(LocalDate.now())){
             updateCurrencyBase();
         }
