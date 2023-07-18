@@ -16,6 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class TelegramBotRepository {
     private Map<String,ForeignCurrency> foreignCurrencyBase;
     private String availableForeignCurrencyBase;
-    private Date dateOfUpdate;
+    private LocalDate dateOfUpdate;
     @Scheduled(cron = "@hourly")
     public void updateCurrencyBase() throws IOException, ParserConfigurationException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -58,7 +59,7 @@ public class TelegramBotRepository {
         }
         foreignCurrencyBase = foreignCurrencyMap;
         availableForeignCurrencyBase = availableCurrencies.toString();
-        dateOfUpdate = new Date();
+        dateOfUpdate = LocalDate.now();
     }
 
     public ForeignCurrency findForeignCurrencyByCharCode (String charCodeToFind) throws IOException, ParserConfigurationException, SAXException {
@@ -67,8 +68,7 @@ public class TelegramBotRepository {
     }
 
     public String getStringDateOfUpdate() {
-        SimpleDateFormat formatter = new SimpleDateFormat(TelegramBotCommon.FORMAT_DATE_OF_BASE_UPGRADE);
-        return formatter.format(dateOfUpdate);
+        return dateOfUpdate.toString();
     }
 
     public String getListOfAvailableCurrency() throws IOException, ParserConfigurationException, SAXException {
@@ -77,7 +77,7 @@ public class TelegramBotRepository {
     }
 
     public void checkIfBaseIsNull() throws IOException, ParserConfigurationException, SAXException {
-        if(foreignCurrencyBase == null){
+        if(foreignCurrencyBase == null || dateOfUpdate.isBefore(LocalDate.now())){
             updateCurrencyBase();
         }
     }
