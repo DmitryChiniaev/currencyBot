@@ -1,81 +1,61 @@
 package com.dmitrychinyaev.currencybot.repository;
 
-import com.dmitrychinyaev.currencybot.entity.ForeignCurrency;
 import com.dmitrychinyaev.currencybot.entity.TelegramBotCommon;
-import org.springframework.scheduling.annotation.Scheduled;
+import com.dmitrychinyaev.currencybot.entity.ValCurs;
+import com.dmitrychinyaev.currencybot.entity.Valute;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.stereotype.Repository;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TelegramBotRepository {
-    private Map<String,ForeignCurrency> foreignCurrencyBase;
+    private List<Valute> foreignCurrencyBase;
     private String availableForeignCurrencyBase;
-    private LocalDate dateOfUpdate;
-    @Scheduled(cron = "@hourly")
-    public void updateCurrencyBase() throws IOException, ParserConfigurationException, SAXException {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        Document doc = db.parse(new URL(TelegramBotCommon.URL_DOWNLOAD_CURRENCY_BASE).openStream());
+    private Date dateOfUpdate;
+    private final XmlMapper xmlMapper = new XmlMapper();
 
-        Node root = doc.getDocumentElement();
-        NodeList nodeList = root.getChildNodes();
+    public void updateCurrencyBase() throws IOException, ParseException {
+        URL cbrXMLurl = new URL(TelegramBotCommon.URL_DOWNLOAD_CURRENCY_BASE);
+        ValCurs allCurrencyXML = xmlMapper.readValue(cbrXMLurl, ValCurs.class);
 
-        Map<String,ForeignCurrency> foreignCurrencyMap = new HashMap<>();
-        StringBuilder availableCurrencies = new StringBuilder();
-
-        for (int i = 0; i < nodeList.getLength(); i++){
-            Node nodeForeignCurrency = nodeList.item(i);
-            if (Node.ELEMENT_NODE == nodeForeignCurrency.getNodeType()){
-                Element element = (Element) nodeForeignCurrency;
-
-                String charcodeExtracted = element.getElementsByTagName(TelegramBotCommon.ATTRIBUTE_FOREIGN_CURRENCY_CHARCODE)
-                        .item(0).getTextContent();
-                int nominalExtracted = Integer.parseInt(element.getElementsByTagName(TelegramBotCommon.ATTRIBUTE_FOREIGN_CURRENCY_NOMINAL)
-                        .item(0).getTextContent());
-                String nameExtracted = element.getElementsByTagName(TelegramBotCommon.ATTRIBUTE_FOREIGN_CURRENCY_NAME)
-                        .item(0).getTextContent();
-                double valueExtracted = Double.parseDouble(element.getElementsByTagName(TelegramBotCommon.ATTRIBUTE_FOREIGN_CURRENCY_VALUE)
-                        .item(0).getTextContent().replace(",","."));
-
-                ForeignCurrency foreignCurrencyExtracted = new ForeignCurrency(charcodeExtracted, nominalExtracted, nameExtracted, valueExtracted);
-                foreignCurrencyMap.put(charcodeExtracted, foreignCurrencyExtracted);
-                availableCurrencies.append(TelegramBotCommon.FORMAT_CONSTRUCT_CURRENCY_LIST.formatted(nameExtracted, charcodeExtracted));
-            }
-        }
-        foreignCurrencyBase = foreignCurrencyMap;
-        availableForeignCurrencyBase = availableCurrencies.toString();
-        dateOfUpdate = LocalDate.now();
+        foreignCurrencyBase = allCurrencyXML.getValute();
+        availableForeignCurrencyBase = getAvailableForeignCurrencyString(foreignCurrencyBase);
+        dateOfUpdate = new SimpleDateFormat("dd.MM.yyyy").parse(allCurrencyXML.getDate());
     }
 
-    public ForeignCurrency findForeignCurrencyByCharCode (String charCodeToFind) throws IOException, ParserConfigurationException, SAXException {
+    public String getAvailableForeignCurrencyString(List<Valute> valuteList){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Valute valute:valuteList) {
+            stringBuilder.append(valute.getName()).append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public Optional<Valute> findValuteByCharCode (String charCodeToFind) throws IOException, ParseException {
         checkIfBaseIsNullOrInvalid();
-        return foreignCurrencyBase.get(charCodeToFind);
+        return foreignCurrencyBase.stream()
+                .filter(s -> s.getCharCode().equals(charCodeToFind))
+                .findFirst();
     }
 
     public String getStringDateOfUpdate() {
         return dateOfUpdate.toString();
     }
 
-    public String getListOfAvailableCurrency() throws IOException, ParserConfigurationException, SAXException {
+    public String getListOfAvailableCurrency() throws IOException, ParseException {
         checkIfBaseIsNullOrInvalid();
         return availableForeignCurrencyBase;
     }
 
-    public void checkIfBaseIsNullOrInvalid() throws IOException, ParserConfigurationException, SAXException {
-        if(foreignCurrencyBase == null || dateOfUpdate.isBefore(LocalDate.now())){
+    public void checkIfBaseIsNullOrInvalid() throws IOException, ParseException {
+        if(foreignCurrencyBase == null || dateOfUpdate.before(new Date())){
             updateCurrencyBase();
         }
     }

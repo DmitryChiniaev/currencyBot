@@ -49,7 +49,7 @@ public class TelegramBotCommon {
             "Согласно ЦБ РФ на 01.01.1999";
     public static final String TEST_SMC_RESULT_RUB_TO_USD = "1000 RUB = 10,00 USD\n" +
             "Согласно ЦБ РФ на 01.01.1999";
-    public static final ForeignCurrency TEST_CURRENCY_USD_100 = new ForeignCurrency("USD", 1, "DOLLAR", 100);
+    public static final Valute TEST_CURRENCY_USD_100 = new Valute("USD", 1, "DOLLAR", "100");
     public static final String TEST_DATE_TO_RETURN = "01.01.1999";
     public static final String TEST_NUMBER_TO_CONVERT = "1000";
     public static final String TEST_CHARCODE_TO_CONVERT = "EUR";

@@ -1,0 +1,20 @@
+2023-07-18 15:48:53.450  INFO 17520 --- [main] c.d.c.service.TelegramBotServiceTest     : Starting TelegramBotServiceTest using Java 18 on LAPTOP-EM3DUPKC with PID 17520 (started by samol in C:\Users\samol\OneDrive\Desktop\currency-bot)
+2023-07-18 15:48:53.451  INFO 17520 --- [main] c.d.c.service.TelegramBotServiceTest     : No active profile set, falling back to 1 default profile: "default"
+2023-07-18 15:48:54.440  INFO 17520 --- [main] c.d.c.service.TelegramBotServiceTest     : Started TelegramBotServiceTest in 1.42 seconds (JVM running for 2.702)
+2023-07-18 15:48:54.525 ERROR 17520 --- [main] c.d.c.service.TelegramBotService         : Неверный запрос
+2023-07-18 15:48:54.539 ERROR 17520 --- [main] c.d.c.service.TelegramBotService         : В запросе отрицательное число или ноль
+2023-07-18 16:17:50.925  INFO 1552 --- [main] c.d.currencybot.CurrencyBotApplication   : Starting CurrencyBotApplication using Java 18 on LAPTOP-EM3DUPKC with PID 1552 (C:\Users\samol\OneDrive\Desktop\currency-bot\target\classes started by samol in C:\Users\samol\OneDrive\Desktop\currency-bot)
+2023-07-18 16:17:50.929  INFO 1552 --- [main] c.d.currencybot.CurrencyBotApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-07-18 16:17:52.974  INFO 1552 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-07-18 16:17:52.991  INFO 1552 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-18 16:17:52.991  INFO 1552 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.74]
+2023-07-18 16:17:53.194  INFO 1552 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-07-18 16:17:53.194  INFO 1552 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2163 ms
+2023-07-18 16:17:55.005  INFO 1552 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-07-18 16:17:55.017  INFO 1552 --- [main] c.d.currencybot.CurrencyBotApplication   : Started CurrencyBotApplication in 5.183 seconds (JVM running for 6.316)
+2023-07-18 16:17:55.993  INFO 1552 --- [ruble-exchange-bot Telegram Executor] c.d.currencybot.bot.TelegramBot          : Пользователь dmitrychinyaev отправил команду start
+2023-07-18 16:18:31.017  INFO 8704 --- [main] c.d.c.service.TelegramBotServiceTest     : Starting TelegramBotServiceTest using Java 18 on LAPTOP-EM3DUPKC with PID 8704 (started by samol in C:\Users\samol\OneDrive\Desktop\currency-bot)
+2023-07-18 16:18:31.019  INFO 8704 --- [main] c.d.c.service.TelegramBotServiceTest     : No active profile set, falling back to 1 default profile: "default"
+2023-07-18 16:18:32.007  INFO 8704 --- [main] c.d.c.service.TelegramBotServiceTest     : Started TelegramBotServiceTest in 1.461 seconds (JVM running for 2.784)
+2023-07-18 16:18:32.078 ERROR 8704 --- [main] c.d.c.service.TelegramBotService         : Неверный запрос
+2023-07-18 16:18:32.090 ERROR 8704 --- [main] c.d.c.service.TelegramBotService         : В запросе отрицательное число или ноль
