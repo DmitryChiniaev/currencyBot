@@ -5,9 +5,7 @@ import com.dmitrychinyaev.currencybot.repository.TelegramBotRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -19,12 +17,14 @@ import java.util.regex.Pattern;
 @Slf4j
 public class TelegramBotService {
     private final TelegramBotRepository telegramBotRepository;
-    public String makeCalculation(String userMessage) throws IOException, ParserConfigurationException, SAXException, ParseException {
+    public String makeCalculation(String userMessage) throws IOException, ParseException {
+
         if (Pattern.matches(TelegramBotCommon.REGEX_CONVERT_TO_RUB, userMessage)) {
             String[] splitUserMessage = userMessage.split(" ");
             //check if number < 1
             String numberToConvertFromMessage = splitUserMessage[0];
-            if(checkNumberGreaterThanZero(numberToConvertFromMessage)<1){
+            if(checkNumberGreaterThanZero(numberToConvertFromMessage)<1 |
+                    checkNumberGreaterThanZero(numberToConvertFromMessage)>100000000 ){
                 log.error("В запросе отрицательное число или ноль");
                 return TelegramBotCommon.TEXT_NOT_POSITIVE;
             }
@@ -36,7 +36,6 @@ public class TelegramBotService {
             }
             return String.format(TelegramBotCommon.FORMAT_RESULT_MESSAGE, currencyConversion(numberToConvertFromMessage,currencyCharCodeFromMessage,false), getDateOfUpdateCurrencyBase());
         }
-
 
         if (Pattern.matches(TelegramBotCommon.REGEX_CONVERT_RUB_TO_CURRENCY, userMessage)) {
             String[] splitUserMessage = userMessage.split(" ");
@@ -86,5 +85,4 @@ public class TelegramBotService {
     public int checkNumberGreaterThanZero(String number){
         return BigDecimal.valueOf(Double.parseDouble(number)).signum();
     }
-
 }
