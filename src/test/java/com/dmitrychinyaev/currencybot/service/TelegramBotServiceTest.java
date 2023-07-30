@@ -12,6 +12,8 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,10 +24,10 @@ class TelegramBotServiceTest {
     @MockBean
     private TelegramBotRepository telegramBotRepositoryTest;
     @Test
-    void makeCalculation() throws IOException, ParserConfigurationException, SAXException {
+    void makeCalculation() throws IOException, ParserConfigurationException, SAXException, ParseException {
 
-        Mockito.when(telegramBotRepositoryTest.findForeignCurrencyByCharCode(ArgumentMatchers.anyString())).
-                thenReturn(TelegramBotCommon.TEST_CURRENCY_USD_100);
+        Mockito.when(telegramBotRepositoryTest.findValuteByCharCode(ArgumentMatchers.anyString())).
+                thenReturn(Optional.of(TelegramBotCommon.TEST_CURRENCY_USD_100));
         Mockito.when(telegramBotRepositoryTest.getStringDateOfUpdate()).
                 thenReturn(TelegramBotCommon.TEST_DATE_TO_RETURN);
 
@@ -40,9 +42,9 @@ class TelegramBotServiceTest {
     }
 
     @Test
-    void currencyConversion() throws IOException, ParserConfigurationException, SAXException {
-        Mockito.when(telegramBotRepositoryTest.findForeignCurrencyByCharCode(ArgumentMatchers.anyString())).
-                thenReturn(TelegramBotCommon.TEST_CURRENCY_USD_100);
+    void currencyConversion() throws IOException, ParseException {
+        Mockito.when(telegramBotRepositoryTest.findValuteByCharCode(ArgumentMatchers.anyString())).
+                thenReturn(Optional.of(TelegramBotCommon.TEST_CURRENCY_USD_100));
 
         assertEquals(telegramBotServiceTest.currencyConversion
                 (TelegramBotCommon.TEST_NUMBER_TO_CONVERT,TelegramBotCommon.TEST_CHARCODE_TO_CONVERT,false),
