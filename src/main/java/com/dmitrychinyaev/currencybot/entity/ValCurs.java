@@ -16,6 +16,6 @@ public final class ValCurs {
     @JacksonXmlProperty(localName = "Date")
     private String date;
     @JacksonXmlElementWrapper(useWrapping = false)
-    private List<Valute> Valute = new ArrayList<>();
+    private List<Valute> Valute = new ArrayList<>(43);
 }
 
